@@ -1,0 +1,114 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<div xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:h="http://xmlns.jcp.org/jsf/html"
+     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+     xmlns:p="http://primefaces.org/ui"
+     xmlns:petboss="http://xmlns.jcp.org/jsf/composite/petboss"
+     xmlns:f="http://xmlns.jcp.org/jsf/core"
+     xmlns:latlabfaces="http://xmlns.jcp.org/jsf/composite/latlabfaces">
+    <ui:composition template="../admin-template.xhtml">
+        <ui:define name="page-title">
+            #{msg.deworming}
+        </ui:define>
+        <ui:define name="content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card-box">
+                        <h:form>
+                            <div class="row">
+
+                                <div class="col-md-5">
+                                    <p:panel header="Pet Search">
+                                        <petboss:petSearch selectAction="#{dewormingController.selectPetAction()}"/>
+                                    </p:panel>
+                                </div>
+
+                                <div class="col-md-7">
+                                    <p:panel header="#{msg.deworming} #{msg.form}">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group row">
+                                                    <h:outputLabel value="Diagnosis Category" styleClass="col-sm-2 form-control-label"/>
+                                                    <div class="col-sm-6">
+                                                        <h:selectOneMenu styleClass="form-control" value="#{dewormingController.selectedDiagnosis}">
+                                                            <f:selectItems value="#{selectItemOptions.dewormDiagnosisSelectItems}" />
+                                                        </h:selectOneMenu>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                            </div>
+
+                                        </div>
+
+                                        <div class="row">
+                                            <br />
+                                            <div class="col-md-6">
+                                                <h5>#{msg.prescriptions}</h5>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p:commandButton styleClass="pull-right"  value="#{msg.add_more}"/>
+                                            </div>
+                                            <hr />
+                                            <p:dataTable value="#{dewormingController.prescriptionsList}" var="prescription">
+                                                <p:column headerText="#{msg.name}">
+                                                    <h:outputText value="#{prescription.product.productName}" />
+                                                </p:column>
+                                                <p:column headerText="#{msg.dosage} #{msg.qty}">
+                                                    <h:inputText value="#{prescription.dosageQuantity}" />
+                                                </p:column>
+                                                <p:column headerText="#{msg.price}">
+                                                    <h:inputText value="#{prescription.price}"/>
+                                                </p:column>
+                                            </p:dataTable>
+
+                                            <br/>
+                                            <div class="form-group row">
+                                                <h:outputLabel value="#{msg.comments}" styleClass="col-sm-2 form-control-label" />
+                                                <div class="col-sm-7">
+                                                    <h:inputTextarea value="#{dewormingController.treatment.comment}" styleClass="form-control" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <h:outputLabel value="#{msg.next_appointment_date}" styleClass="col-sm-2 form-control-label" />
+                                                <div class="col-sm-7">
+                                                    <p:calendar value="#{surgeryController.treatment.nextTreatmentDate}" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <h:panelGroup layout="block">
+                                            <h:panelGrid columns="2">
+                                                <p:commandButton value="#{msg.save}" actionListener="#{dewormingController.saveTreatment()}" ajax="false"/>
+                                                <p:commandButton value="#{msg.clear}" actionListener="#{dewormingController.clear()}" ajax="false"/>
+                                            </h:panelGrid>
+                                        </h:panelGroup>
+                                    </p:panel>
+                                </div>
+
+                            </div>
+                        </h:form>
+                        <br />
+                        <p:panel header="#{msg.deworming} #{msg.history}">
+                            <p:dataTable value="#{dewormingController.treatmentsList}" var="treatment" paginator="true" paginatorPosition="bottom"
+                                         rows="10">
+                                <p:column headerText="#{msg.date}">
+                                    <latlabfaces:dateDisplay value="#{treatment.valueDate}" />
+                                </p:column>
+                                <p:column headerText="#{msg.diagnosis}">
+                                    <h:outputText value="#{treatment.diagnosis.diagnosisName}" />
+                                </p:column>
+                                <p:column headerText="#{msg.next_appointment_date}">
+                                    <latlabfaces:dateDisplay value="#{treatment.nextTreatmentDate}" />
+                                </p:column>
+                            </p:dataTable>
+                        </p:panel>
+                    </div>
+                </div>
+            </div>
+        </ui:define>
+    </ui:composition>
+</div>
+

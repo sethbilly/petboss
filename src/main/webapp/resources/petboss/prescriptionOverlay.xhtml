@@ -1,0 +1,84 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:cc="http://java.sun.com/jsf/composite"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:latlabfaces="http://xmlns.jcp.org/jsf/composite/latlabfaces">
+    <!-- INTERFACE -->
+    <cc:interface>
+        <cc:attribute name="ajax" default="true"/>
+        <cc:attribute name="overlay" default="false" />
+        <cc:attribute name="rows" default="15" />
+        <cc:attribute name="value"/>
+        <cc:attribute name="update" default="@form"/>
+
+        <cc:attribute name="allowMutipleSelection" default="false"/>
+
+        <cc:attribute name="selectAction" 
+                      required="false"
+                      method-signature="java.lang.String action()"/>
+
+        <cc:attribute name="otherAccountAction" 
+                      required="false"
+                      method-signature="java.lang.String action()"/>
+
+        <cc:attribute name="otherActionLabel"/>
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+
+
+        <h:panelGroup style="margin: 2px;">
+
+            <h:panelGroup id="searchPanel" >
+
+                <h:panelGrid columns="10" styleClass="spaced-table" style="background: #fff;">
+                    <h:outputLabel value ="Product Name" />
+                    <p:inputText value ="#{invoiceSearchController.qryString}" />
+                    <p:commandButton value="Search" ajax="#{cc.attrs.ajax}"  update="@form" actionListener="#{invoiceSearchController.searchInvoice()}"/>
+                </h:panelGrid>
+
+            </h:panelGroup>
+
+            <h:panelGroup>
+                <p:dataTable value="#{treatmentController.addMorePrescriptionsList}" var="prescription" 
+                             paginator="true" paginatorPosition="top" rows="#{cc.attrs.rows}">
+
+                    <p:column headerText="#{msg.product}">
+                        <latlabfaces:dateDisplay value="#{stock.purchaseDate}" />                
+                    </p:column>
+                    <p:column headerText="#{}">
+                        <h:outputText value="#{stock.product.productName}"/>                
+                    </p:column>
+                    <p:column headerText="Invoice No.">
+                        <p:commandLink value="#{stock.invoiceNo}" 
+                                       ajax="#{cc.attrs.ajax}" 
+                                       update="#{cc.attrs.update}"
+                                       rendered="#{not empty cc.attrs.selectAction}" 
+                                       action="#{cc.attrs.selectAction}">
+
+                            <f:setPropertyActionListener value="#{stock}" target="#{invoiceSearchController.selectedStock}" />
+                        </p:commandLink>
+
+                        <h:outputText value="#{stock.invoiceNo}" 
+                                      rendered="#{empty cc.attrs.selectAction}"/>                        
+                    </p:column>
+                    <p:column headerText="Action">
+                        <p:commandLink value="Select"
+                                       ajax="#{cc.attrs.ajax}" 
+                                       update="#{cc.attrs.update}"
+                                       rendered="#{not empty cc.attrs.selectAction}" 
+                                       action="#{cc.attrs.selectAction}">
+
+                            <f:setPropertyActionListener value="#{stock}" target="#{invoiceSearchController.selectedStock}" />
+                        </p:commandLink>                    
+                    </p:column>
+                </p:dataTable>
+
+            </h:panelGroup>
+
+        </h:panelGroup>
+    </cc:implementation>
+
+</html>

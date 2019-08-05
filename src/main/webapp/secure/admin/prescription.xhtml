@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:petboss="http://xmlns.jcp.org/jsf/composite/petboss"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:latlabfaces="http://xmlns.jcp.org/jsf/composite/latlabfaces">
+    <ui:composition template="../admin-template.xhtml">
+        <ui:define name="page-title">
+            #{msg.prescriptions}
+        </ui:define>
+        <ui:define name="content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card-box">
+                        <h:form id="prescriptionsForm">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <p:panel header="Diagnosis Search">
+                                        <petboss:diagnosisSearch selectAction="#{prescriptionController.selectDiagnosisAction()}" />
+                                    </p:panel>
+
+                                </div>
+                                <div class="col-md-8">
+                                    <p:panel header="#{msg.prescriptions} #{msg.form}">
+                                        <p:panel header="Product List">
+                                            <petboss:productsList selectAction="#{prescriptionController.addProduct()}" />
+                                        </p:panel>
+                                        <br/>
+                                        <p:panel header="Prescriptions List for #{prescriptionController.selectedDiagnosis.diagnosisName}">
+                                            <p:dataTable value="#{prescriptionController.productsList}" var="prescribed" rows="5" paginator="true" paginatorPosition="bottom">
+                                                <p:column headerText="#{msg.name}">
+                                                    <h:outputText value="#{prescribed.productName}"/>
+                                                </p:column>
+                                                <p:column headerText="#{msg.dosage} #{msg.qty}">
+                                                    <h:inputText value="#{prescribed.dosageQty}"/>
+                                                </p:column>
+                                                <p:column headerText="#{msg.price}">
+                                                    <h:inputText value="#{prescribed.unitPrice}"/>
+                                                </p:column>
+                                                <p:column headerText="#{msg.action}">
+                                                    <p:commandLink value="#{msg.remove}" ajax="true" update="@form" actionListener="#{prescriptionController.removeProduct(prescribed)}"/>
+                                                </p:column>
+                                            </p:dataTable>
+                                        </p:panel>
+                                        <br />
+                                        <h:panelGroup layout="block">
+                                            <h:panelGrid columns="2">
+                                                <p:commandButton value="#{msg.save}" actionListener="#{prescriptionController.savePrescription()}" ajax="false"/>
+                                                <p:commandButton value="#{msg.clear}" actionListener="#{prescriptionController.clear()}" ajax="false"/>
+                                            </h:panelGrid>
+                                        </h:panelGroup>
+                                    </p:panel>
+                                </div>
+                            </div>
+                        </h:form>
+                        <br />
+                        <h:form>
+                            <p:dataTable value="#{prescriptionController.prescriptionsList}" var="prescription" rows="10"
+                                         paginator="true" paginatorPosition="bottom">
+                                <p:column headerText="#{msg.name}">
+                                    <h:outputText value="#{prescription.product.productName}"/>
+                                </p:column>
+                                <p:column headerText="#{msg.dosage} #{msg.qty}">
+                                    <h:outputText value="#{prescription.dosageQuantity}"/>
+                                </p:column>
+                                <p:column headerText="#{msg.price}">
+                                    <latlabfaces:doubleDisplay value="#{prescription.price}"/>
+                                </p:column>
+                                <p:column headerText="#{msg.action}">
+                                    <p:commandLink value="#{msg.select}" actionListener="#{prescriptionController.selectPrescription(prescription)}"
+                                                   ajax="false"/> |
+                                    <p:commandLink value="#{msg.del}" actionListener="#{prescriptionController.deletePrescription(prescription)}"
+                                                   ajax="true" update="@form"/>
+                                </p:column>
+                            </p:dataTable>
+                        </h:form>
+                    </div>
+                </div>
+            </div>
+        </ui:define>
+    </ui:composition>
+</html>
+

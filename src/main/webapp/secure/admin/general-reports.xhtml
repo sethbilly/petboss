@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="../admin-template.xhtml">
+        <ui:define name="page-title">
+            #{msg.client} #{msg.account}
+        </ui:define>
+        <ui:define name="content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card-box">
+                        <div class="row">
+                            <p:panel header="Report Parameters">
+                                <h:form>
+                                    <h:panelGroup layout="block" styleClass="spaced-table">
+                                        <h:panelGrid columns="6">
+                                            <h:outputText value="#{msg.from}" />
+                                            <p:calendar value="#{reportController.reportInputParam.dateRange.fromDate}" 
+                                                        pattern="dd/MM/yyyy"
+                                                        navigator="true"/>
+                                            <h:outputText value="#{msg.to}" />
+                                            <p:calendar value="#{reportController.reportInputParam.dateRange.toDate}" 
+                                                        pattern="dd/MM/yyyy"
+                                                        navigator="true"/>
+                                            <h:outputText value="#{msg.quarter}" />
+                                            <h:selectOneMenu value="#{reportController.reportInputParam.quarter}" styleClass="form-control">
+                                                <f:selectItem itemLabel="--Select Quarter--"/>
+                                                <f:selectItems value="#{selectItemOptions.yearQuarterSelectItems}"/>
+                                            </h:selectOneMenu>
+                                        </h:panelGrid>
+                                    </h:panelGroup>
+                                </h:form>
+
+                            </p:panel>
+                        </div>
+                        <br />
+                        <h:form class="form">
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <p:panel header="Daily Reports">
+                                        <h:panelGrid columns="2" styleClass="spaced-table">
+                                            <h:commandLink value="Daily Treatment Report" styleClass="btn btn-sm btn-success"/>
+                                        </h:panelGrid>
+                                    </p:panel>
+                                </div>
+                                <div class="col-md-7">
+                                    <p:panel header="Dated Reports">
+                                        <h:panelGrid columns="6" styleClass="spaced-table">
+                                            <h:commandLink value="Dewormings" styleClass="btn btn-sm btn-success"/> 
+                                            <h:commandLink value="Vaccinations" styleClass="btn btn-sm btn-success"/> 
+                                            <h:commandLink value="Surgeries" styleClass="btn btn-sm btn-success"/> 
+                                            <h:commandLink value="Vaccinations" styleClass="btn btn-sm btn-success"/> 
+                                        </h:panelGrid>
+                                    </p:panel>
+
+                                </div>
+                            </div>
+
+                        </h:form>
+                    </div>
+                </div>
+            </div>
+        </ui:define>
+    </ui:composition>
+</html>
+

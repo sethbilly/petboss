@@ -1,0 +1,88 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:petboss="http://xmlns.jcp.org/jsf/composite/petboss"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:latlabfaces="http://xmlns.jcp.org/jsf/composite/latlabfaces">
+    <ui:composition template="../admin-template.xhtml">
+        <ui:define name="page-title">
+            #{msg.pet} #{msg.boarding}
+        </ui:define>
+        <ui:define name="content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card-box">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <p:panel header="Pet List">
+                                    <h:form>
+                                        <petboss:petSearch selectAction="#{petBoardingController.selectPet()}" ajax="=false"/>
+                                    </h:form>
+
+                                </p:panel>
+                            </div>
+                            <div class="col-md-7">
+                                <p:panel header="Boarding Duration">
+                                    <h:form class="form">
+                                        <h:panelGrid columns="4" styleClass="spaced-table">
+                                            <h:outputText value="#{msg.from}" />
+                                            <p:calendar value="#{petBoardingController.petBoarding.fromDate}" 
+                                                        pattern="dd/MM/yyyy" mode="popup"
+                                                        navigator="true"/>
+                                            <h:outputText value="#{msg.to}" />
+                                            <p:calendar value="#{petBoardingController.petBoarding.toDate}" 
+                                                        pattern="dd/MM/yyyy"
+                                                        navigator="true"/>
+                                            <h:outputText value="#{msg.comments}" />
+                                            <h:inputTextarea value="#{petBoardingController.petBoarding.description}" styleClass="form-control"/>
+                                        </h:panelGrid>
+                                        <br />
+                                        <h:panelGroup layout="block">
+                                            <h:panelGrid columns="2">
+                                                <p:commandButton value="#{msg.save}" actionListener="#{petBoardingController.savePetBoarding()}" ajax="false"/>
+                                                <p:commandButton value="#{msg.clear}" ajax="false" actionListener="#{petBoardingController.clear()}" />
+                                            </h:panelGrid>
+                                        </h:panelGroup>
+                                    </h:form>
+                                    <br />
+                                    <h:form>
+                                        <p:dataTable value="#{petBoardingController.petBoardingList}" var="petBoarding">
+                                            <p:column headerText="#{msg.chip_code}">
+                                                <h:outputText value="#{petBoarding.pet.chipCode}"/>
+                                            </p:column>
+                                            <p:column headerText="#{msg.name}">
+                                                #{petBoarding.pet.name}
+                                            </p:column>
+                                            <p:column headerText="#{msg.arrival} #{msg.date}">
+                                                <latlabfaces:dateDisplay value="#{petBoarding.fromDate}" />
+                                            </p:column>
+                                            <p:column headerText="#{msg.discharge} #{msg.date}">
+                                                <latlabfaces:dateDisplay value="#{petBoarding.toDate}" />
+                                            </p:column>
+                                            <p:column headerText="#{msg.history}">
+                                                <latlabfaces:dateDisplay value="#{petBoarding.toDate}" />
+                                            </p:column>
+                                            <p:column headerText="#{msg.owner}">
+                                                <latlabfaces:dateDisplay value="#{petBoarding.toDate}" />
+                                            </p:column>
+                                            <p:column headerText="#{msg.action}">
+                                                <h:commandLink value="#{msg.select}" actionListener="#{petBoardingController.selectPetBoarding(petBoarding)}"/> |
+                                                <h:commandLink value="#{msg.del}" actionListener="#{petBoardingController.deletePetBoarding(petBoarding)}"/>
+                                            </p:column>
+                                        </p:dataTable>
+                                    </h:form>
+                                </p:panel>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </ui:define>
+    </ui:composition>
+</html>
+

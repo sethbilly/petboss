@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:petboss="http://xmlns.jcp.org/jsf/composite/petboss"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:latlabfaces="http://xmlns.jcp.org/jsf/composite/latlabfaces">
+    <ui:composition template="../admin-template.xhtml">
+        <ui:define name="page-title">
+            #{msg.client} #{msg.account}
+        </ui:define>
+        <ui:define name="content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card-box">
+                        <h:form class="form">
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <p:panel header="Client List">
+                                        <petboss:clientSearch selectAction="#{clientAccountController.selectClient()}" />
+                                    </p:panel>
+                                </div>
+                                <div class="col-md-7">
+                                    <p:panel header="#{msg.client} #{msg.transactions}">
+                                        <p:dataTable value="#{clientAccountController.clientTransactionList}" var="transc" paginator="true" paginatorPosition="bottom">
+                                            <p:column headerText="#{msg.transactions} #{msg.date}">
+                                                <latlabfaces:dateDisplay value="#{transc.valueDate}" />
+                                            </p:column>
+                                            <p:column headerText="#{msg.debit}">
+                                                <latlabfaces:doubleDisplay value="#{transc.debit}" />
+                                            </p:column>
+                                            <p:column headerText="#{msg.credit}">
+                                                <latlabfaces:doubleDisplay value="#{transc.credit}" />
+                                            </p:column>
+                                            <p:column headerText="#{msg.description}">
+                                                <h:outputText value="#{transc.description}" />
+                                            </p:column>
+                                        </p:dataTable>
+                                    </p:panel>
+
+                                </div>
+                            </div>
+
+                        </h:form>
+                    </div>
+                </div>
+            </div>
+        </ui:define>
+    </ui:composition>
+</html>
+

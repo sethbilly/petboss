@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:petboss="http://xmlns.jcp.org/jsf/composite/petboss"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:latlabfaces="http://xmlns.jcp.org/jsf/composite/latlabfaces">
+    <ui:composition template="../admin-template.xhtml">
+        <ui:define name="page-title">
+            #{msg.hse_call}
+        </ui:define>
+        <ui:define name="content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card-box">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <p:panel header="Client Search">
+                                    <h:form>
+                                        <petboss:clientSearch selectAction="#{bookingController.selectClient()}" ajax="false"/>
+                                    </h:form>
+                                </p:panel>
+                            </div>
+                            <div class="col-md-6">
+                                <p:panel header="#{msg.hse_call} #{msg.form}">
+                                    <h:form class="form">
+                                        <h:panelGrid columns="4" styleClass="spaced-table">
+                                            <h:outputText value="#{msg.name}" styleClass="field-label"/>
+                                            <h:inputText disabled="true" value="#{bookingController.selectedClient.clientFullName}" styleClass="field-value"/>
+                                            <h:outputText value="#{msg.address}" styleClass="field-label"/>
+                                            <h:inputTextarea value="#{bookingController.selectedClient.addressLine}" disabled="true" styleClass="field-value"/>
+                                             <h:outputText value="#{msg.tel}" styleClass="field-label"/>
+                                            <h:inputText value="#{bookingController.selectedClient.mobileNumber}" styleClass="field-value" disabled="true"/>
+                                            <h:outputText value="#{msg.email}" styleClass="field-label"/>
+                                            <h:inputText value="#{bookingController.selectedClient.email}" disabled="true" styleClass="field-value"/>
+                                            <h:outputText value="#{msg.date}" />
+                                            <p:calendar timeControlType="select" value="#{bookingController.booking.bookingSlot}" 
+                                                        pattern="dd/MM/yyyy HH:mm" timeZone="GMT+0" mindate="#{bookingController.today}"/>
+              
+                                            <h:outputText value="#{msg.complain}" />
+                                            <h:inputTextarea value="#{bookingController.booking.description}"/>
+                                            
+                                            
+                                            <h:outputText value="#{msg.assign} #{msg.doctor}" />
+                                            <p:selectOneMenu value="#{bookingController.booking.assignedStaff}" filter="true" filterMatchMode="contains">
+                                                <f:selectItem itemLabel="#{msg.select_one}" />
+                                                <f:selectItems value="#{selectItemOptions.doctorSelectItems}" />
+                                            </p:selectOneMenu>
+                                        </h:panelGrid>
+                                        <br />
+                                        <h:panelGroup layout="block">
+                                            <h:panelGrid columns="2">
+                                                <p:commandButton actionListener="#{bookingController.saveBooking()}" value="#{msg.save}" ajax="false"/>
+                                                <p:commandButton value="#{msg.clear}" actionListener="#{bookingController.clear}" ajax="false"/>
+                                            </h:panelGrid>
+                                        </h:panelGroup>
+                                    </h:form>
+                                </p:panel>
+
+                            </div>
+                        </div>
+                        <br />
+                        <h:form>
+                            <p:panel header="#{msg.history} #{msg.hse_call} #{bookingController.selectedClient.clientFullName}">
+                                <p:dataTable value="#{bookingController.bookingsList}" var="booking" rows="20">
+                                    <p:column headerText="#{msg.booking} #{msg.slot}">
+                                        <h:outputText value="#{booking.bookingSlot}" />
+                                    </p:column>
+                                    <p:column headerText="#{msg.client} #{msg.id}">
+                                        <h:outputText value="#{booking.client.clientCode}" />
+                                    </p:column>
+                                    <p:column headerText="#{msg.client} #{msg.name}">
+                                        <h:outputText value="#{booking.client.clientFullName}" />
+                                    </p:column>
+
+                                    <p:column headerText="#{msg.action}">
+                                        <p:menuButton value="#{msg.action}">
+                                            <p:menuitem value="#{msg.select}" actionListener="#{bookingController.selectBooking(booking)}" ajax="false"/>
+                                            <p:menuitem value="#{msg.del}" actionListener="#{bookingController.deleteBooking(booking)}" ajax="false"/>
+                                            <p:separator />
+                                        </p:menuButton>
+                                    </p:column>
+                                </p:dataTable>
+                            </p:panel>
+
+                        </h:form>
+                    </div>
+                </div>
+            </div>
+        </ui:define>
+    </ui:composition>
+</html>
+

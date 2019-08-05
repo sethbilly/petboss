@@ -1,0 +1,61 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:cc="http://java.sun.com/jsf/composite"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:latlabfaces="http://xmlns.jcp.org/jsf/composite/latlabfaces">
+    <!-- INTERFACE -->
+    <cc:interface>
+        <cc:attribute name="ajax" default="true"/>
+        <cc:attribute name="overlay" default="false" />
+        <cc:attribute name="rows" default="15" />
+        <cc:attribute name="value"/>
+        <cc:attribute name="update" default="@form"/>
+
+        <cc:attribute name="allowMutipleSelection" default="false"/>
+
+        <cc:attribute name="selectAction" 
+                      required="false"
+                      method-signature="java.lang.String action()"/>
+
+        <cc:attribute name="otherAccountAction" 
+                      required="false"
+                      method-signature="java.lang.String action()"/>
+
+        <cc:attribute name="otherActionLabel"/>
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+
+
+        <h:panelGroup style="margin: 2px;">
+            <h:panelGroup>
+
+                <p:dataTable value="#{productController.productsList}" var="product" 
+                             paginator="true" paginatorPosition="top" rows="#{cc.attrs.rows}">
+
+                    <p:column headerText="#{msg.name}">
+                        <h:outputText value="#{product.productName}" />                
+                    </p:column>
+                    <p:column headerText="#{msg.dosage} #{msg.form}">
+                        <h:outputText value="#{product.productForm.formName}"/>                
+                    </p:column>
+                    
+                    <p:column headerText="#{msg.action}">
+                        <p:commandLink value="Select"
+                                       ajax="#{cc.attrs.ajax}" 
+                                       update="#{cc.attrs.update}"
+                                       rendered="#{not empty cc.attrs.selectAction}" 
+                                       action="#{cc.attrs.selectAction}">
+                            <f:setPropertyActionListener value="#{product}" target="#{productController.selectedTblProduct}" />
+                        </p:commandLink>                    
+                    </p:column>
+                </p:dataTable>
+
+            </h:panelGroup>
+
+        </h:panelGroup>
+    </cc:implementation>
+
+</html>

@@ -1,0 +1,232 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+        <!-- App Favicon -->
+        <link rel="shortcut icon" href="assets/images/favicon.ico"/>
+        <!-- App title -->
+        <title>PetBoss</title>
+        <!-- Switchery css -->
+        <link href="#{application.contextPath}/resources/css/switchery.min.css" rel="stylesheet" />
+        <!-- App CSS -->
+        <link href="#{application.contextPath}/resources/css/style.css" rel="stylesheet" />
+        <link href="#{application.contextPath}/resources/css/ui.css" rel="stylesheet" />
+        <!-- js scripts go here-->
+        <!--        <h:outputScript library="js" name="jquery.min.js"/>-->
+        <h:outputScript library="primefaces" name="jquery/jquery.js" />
+        <!--        <h:outputScript library="js" name="tether.min.js"/>-->
+        <h:outputScript library="js" name="bootstrap.min.js"/>
+        <h:outputScript library="js" name="waves.js"/>
+        <h:outputScript library="js" name="jquery.nicescroll.js"/>
+        <!--        <h:outputScript library="js" name="switchery.min.js"/>-->
+
+        <h:outputScript library="js" name="jquery.core.js"/>
+        <h:outputScript library="js" name="jquery.app.js"/>
+
+    </h:head>
+    <h:body>
+        <!-- Navigation Bar-->
+        <header id="topnav">
+            <div class="topbar-main">
+                <div class="container">
+
+                    <!-- LOGO -->
+                    <div class="topbar-left">
+                        <a href="javascript:void(0);" class="logo">
+                            <i class="zmdi zmdi-group-work icon-c-logo"></i>
+                            <span>PetBoss</span>
+                        </a>
+                    </div>
+                    <!-- End Logo container-->
+
+
+                    <div class="menu-extras">
+
+                        <ul class="nav navbar-nav pull-right">
+
+                            <li class="nav-item">
+                                <!-- Mobile menu toggle-->
+                                <a class="navbar-toggle">
+                                    <div class="lines">
+                                        <span></span>
+                                        <span></span>
+                                        <span></span>
+                                    </div>
+                                </a>
+                                <!-- End mobile menu toggle-->
+                            </li>
+
+                            <li class="nav-item dropdown notification-list">
+                                <a class="nav-link dropdown-toggle arrow-none waves-effect waves-light nav-user" data-toggle="dropdown" href="#" role="button"
+                                   aria-haspopup="false" aria-expanded="false">
+                                    <img src="assets/images/users/avatar-1.jpg" alt="user" class="img-circle"/>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right dropdown-arrow profile-dropdown " aria-labelledby="Preview">
+                                    <!-- item-->
+                                    <div class="dropdown-item noti-title">
+                                        <h5 class="text-overflow"><small>Welcome ! John</small> </h5>
+                                    </div>
+
+                                    <!-- item-->
+                                    <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                        <i class="zmdi zmdi-account-circle"></i> <span>Profile</span>
+                                    </a>
+
+                                    <!-- item-->
+                                    <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                        <i class="zmdi zmdi-settings"></i> <span>Settings</span>
+                                    </a>
+
+                                    <!-- item-->
+                                    <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                        <i class="zmdi zmdi-lock-open"></i> <span>Lock Screen</span>
+                                    </a>
+
+                                    <!-- item-->
+                                    <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                        <i class="zmdi zmdi-power"></i> <span>Logout</span>
+                                    </a>
+
+                                </div>
+                            </li>
+
+                        </ul>
+
+                    </div> <!-- end menu-extras -->
+                    <div class="clearfix"></div>
+
+                </div> <!-- end container -->
+            </div>
+            <!-- end topbar-main -->
+
+
+            <div class="navbar-custom">
+                <div class="container">
+                    <div id="navigation">
+                        <!-- Navigation Menu-->
+                        <ul class="navigation-menu">
+                            <li>
+                                <a href="#{application.contextPath}/app/secure/admin/dashboard.xhtml"><i class="zmdi zmdi-view-dashboard"></i> <span> Dashboard </span> </a>
+                            </li>
+                            <li >
+                                <a href="#{application.contextPath}/app/secure/admin/register-client.xhtml"><i class="zmdi zmdi-format-underlined"></i> <span> Registration </span> </a>
+                            </li>
+
+                            <li>
+                                <a href="#{application.contextPath}/app/secure/admin/house-call.xhtml"><i class="zmdi zmdi-collection-text"></i><span> House Calls </span> </a>
+                            </li>
+                            <li>
+                                <a href="#{application.contextPath}/app/secure/admin/pet-boarding.xhtml"><i class="zmdi zmdi-collection-text"></i><span> Pet Boarding </span> </a>
+                            </li>
+
+                            <li class="has-submenu">
+                                <a href="#"><i class="zmdi zmdi-format-list-bulleted"></i> <span> Consulting Room </span> </a>
+                                <ul class="submenu">
+                                    <li><a href="#{application.contextPath}/app/secure/admin/treatment.xhtml">Consultations</a></li>
+                                    <ui:remove>
+                                        <li><a href="#{application.contextPath}/app/secure/admin/treatment.xhtml">Treatments</a></li>
+
+                                        <li><a href="#{application.contextPath}/app/secure/admin/deworming.xhtml">Deworming</a></li>
+                                        <li><a href="#{application.contextPath}/app/secure/admin/vaccination.xhtml">Vaccination</a></li>
+                                        <li><a href="#{application.contextPath}/app/secure/admin/surgery.xhtml">Surgery</a></li>
+                                        <li><a href="#{application.contextPath}/app/secure/admin/treatment-others.xhtml">Others</a></li>
+                                    </ui:remove>
+
+                                </ul>
+                            </li>
+                            <li class="has-submenu">
+                                <a href="#"><i class="zmdi zmdi-format-list-bulleted"></i> <span> Reports </span> </a>
+                                <ul class="submenu">
+                                    <li><a href="#{application.contextPath}/app/secure/admin/client-accounts.xhtml"> Client Accounts </a></li>
+                                    <li><a href="#{application.contextPath}/app/secure/admin/general-reports.xhtml"> General Reports </a></li>
+                                </ul>
+                            </li>
+
+                            <li class="has-submenu">
+                                <a href="#"><i class="zmdi zmdi-collection-item"></i> <span> Settings </span> </a>
+                                <ul class="submenu megamenu">
+                                    <li>
+                                        <ul>
+                                            <li><a href="#{application.contextPath}/app/secure/admin/diagnosis-category.xhtml">Diagnosis Categories</a></li>
+                                            <li><a href="#{application.contextPath}/app/secure/admin/diagnosis.xhtml">Diagnosis</a></li>
+                                            <li><a href="#{application.contextPath}/app/secure/admin/prescription.xhtml">Prescriptions</a></li>
+                                            <li><a href="#{application.contextPath}/app/secure/admin/products.xhtml">Products</a></li>
+                                            <li><a href="#{application.contextPath}/app/secure/admin/product-forms.xhtml">Product Forms</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            <ui:remove>
+                                <li class="has-submenu">
+                                    <a href="#"><i class="zmdi zmdi-collection-item"></i> <span> User Access </span> </a>
+                                    <ul class="submenu megamenu">
+                                        <li>
+                                            <ul>
+                                                <li><a href="#{application.contextPath}/app/secure/admin/staff.xhtml">Staff</a></li>
+                                                <li><a href="#{application.contextPath}/app/secure/admin/user-access.xhtml">User Account</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ui:remove>
+
+
+                        </ul>
+                        <!-- End navigation menu  -->
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- End Navigation Bar-->
+
+
+
+        <!-- ============================================================== -->
+        <!-- Start right Content here -->
+        <!-- ============================================================== -->
+        <div class="wrapper">
+            <div class="container">
+                <!-- Page-Title -->
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="btn-group pull-right m-t-15">
+
+                        </div>
+                        <h4 class="page-title">
+                            <ui:insert name="page-title" />
+                        </h4>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <p:messages id="actionMsgs" style="font-size: x-small;" globalOnly="true"/>
+                    <ui:insert name="content">
+
+                    </ui:insert>
+                </div>
+
+
+                <!-- Footer -->
+                <footer class="footer text-right">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                2016 © PetBoss
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+                <!-- End Footer -->
+            </div> <!-- container -->
+        </div> <!-- End wrapper -->
+
+    </h:body>
+</html>
+
+

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.0.final using JasperReports Library version 6.3.0  -->
+<!-- 2017-04-25T22:35:25 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="default_report_header_portrait" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="a3b77b80-b894-4e9b-a7a2-4e3116d70421">
+	<property name="ireport.zoom" value="1.3636363636363638"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<style name="field-label" hTextAlign="Left" hImageAlign="Left" vTextAlign="Middle" vImageAlign="Middle" fontName="Calibri" fontSize="8" isBold="true" isItalic="false" isUnderline="false"/>
+	<style name="field-value" hTextAlign="Left" hImageAlign="Left" vTextAlign="Middle" vImageAlign="Middle" isBlankWhenNull="true" fontName="Calibri" fontSize="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+	<style name="report-title-footer" fontName="Calibri" fontSize="7" isBold="false" isItalic="true" isUnderline="false"/>
+	<style name="section-labels" forecolor="#660000" fill="Solid" hTextAlign="Left" hImageAlign="Left" vTextAlign="Middle" vImageAlign="Middle" isBlankWhenNull="true" fontName="Calibri" fontSize="10" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false"/>
+	<parameter name="statementDate" class="java.lang.String"/>
+	<parameter name="companyName" class="java.lang.String"/>
+	<parameter name="companyLogo" class="java.awt.Image"/>
+	<parameter name="reportTitle" class="java.lang.String"/>
+	<title>
+		<band height="76" splitType="Stretch">
+			<frame>
+				<reportElement positionType="Float" x="0" y="1" width="555" height="75" uuid="df89138e-5058-45c6-9725-846b76be32b9"/>
+				<image>
+					<reportElement x="462" y="0" width="92" height="47" uuid="df0282d2-611a-401c-b73e-2c634a038ccf"/>
+					<imageExpression><![CDATA[$P{companyLogo}]]></imageExpression>
+				</image>
+				<line>
+					<reportElement x="0" y="74" width="555" height="1" uuid="80de1b7a-b38f-474d-b075-e165d627d65c"/>
+					<graphicElement>
+						<pen lineWidth="3.0" lineColor="#E57B4C"/>
+					</graphicElement>
+				</line>
+				<textField>
+					<reportElement mode="Opaque" x="0" y="53" width="555" height="18" forecolor="#FFFFFF" backcolor="#0C8C0A" uuid="901794dd-3287-47d9-a9b4-6647adc7cd55"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$P{reportTitle}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement mode="Transparent" x="380" y="42" width="174" height="12" forecolor="#333333" uuid="5a1e5214-4317-4033-8dcf-f2d45bb009ef"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+						<font size="7" isItalic="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{statementDate}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="1" y="23" width="308" height="14" uuid="22f8a207-9b58-40e4-aad3-c79c957cb580"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Calibri" size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{companyName}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

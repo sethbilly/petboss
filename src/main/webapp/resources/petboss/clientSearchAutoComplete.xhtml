@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:p="http://primefaces.org/ui">
+     <!-- INTERFACE -->
+    <cc:interface>
+        <cc:attribute name="ajax" default="false"/>
+        <cc:attribute name="overlay" default="false" />
+        <cc:attribute name="rows" default="8" />
+        <cc:attribute name="update" default="@form"/>
+        <cc:attribute name="disable" default="false"/>
+        <cc:attribute name="value" />
+        <cc:attribute name="selectItemAction" 
+                      required="false"
+                      method-signature="java.lang.String action()"/>
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+        
+        <p:autoComplete completeMethod="#{clientSearchController.searchClientByAttribute}" var="client"
+                                    itemLabel="#{client.productName}" converter="omnifaces.SelectItemsConverter"
+                                    itemValue="#{client}" minQueryLength="5" 
+                                    value="#{cc.attrs.value}">
+          </p:autoComplete>
+   
+    </cc:implementation>
+</html>
+

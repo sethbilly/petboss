@@ -1,0 +1,152 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<h:panelGroup xmlns="http://www.w3.org/1999/xhtml"
+              xmlns:h="http://xmlns.jcp.org/jsf/html"
+              xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+              xmlns:petboss="http://xmlns.jcp.org/jsf/composite/petboss"
+              xmlns:f="http://xmlns.jcp.org/jsf/core"
+              xmlns:p="http://primefaces.org/ui"
+              xmlns:latlabfaces="http://xmlns.jcp.org/jsf/composite/latlabfaces">
+
+
+    <div class="col-sm-12">
+        <h:form>
+            <p:commandButton styleClass="pull-right btn btn-danger" action="#{clientController.closeDialog()}" 
+                             immediate="true" ajax="false" value="#{msg.close}"/>
+        </h:form>
+        <br />
+    </div>
+    <div class="row">
+
+        <div class="col-md-12">
+
+            <p:panel header="Pet Form">
+                <h:form class="form" id="petForm">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <h:outputLabel value="#{msg.chip_code}" styleClass="col-sm-4 form-control-label"/>
+                            <div class="col-sm-7">
+                                <h:inputText value="#{petController.pet.chipCode}" styleClass="form-control"/>
+                            </div>
+
+                        </div>
+                        <div class="form-group row">
+                            <h:outputLabel value="#{msg.book_code}" styleClass="col-sm-4 form-control-label"/>
+                            <div class="col-sm-7">
+                                <h:inputText value="#{petController.pet.bookCode}" styleClass="form-control"/>
+                            </div>
+
+                        </div>
+
+                        <div class="form-group row">
+                            <h:outputLabel value="#{msg.name}" styleClass="col-sm-4 form-control-label">
+                                <span class="text-danger"> * <h:message for="petName"/> </span>
+                            </h:outputLabel>
+                            <div class="col-sm-7">
+                                <h:inputText value="#{petController.pet.name}" styleClass="form-control" required="true" id="petName" requiredMessage="required"/>
+                            </div>
+
+                        </div>
+                        <div class="form-group row">
+                            <h:outputLabel value="#{msg.dob}" styleClass="col-sm-4 form-control-label"/>
+                            <div class="col-sm-7">
+                                <p:calendar navigator="true" pattern="#{msg.date_pattern}" value="#{petController.pet.dateOfBirth}"/>
+                            </div>
+
+                        </div>
+
+                        <div class="form-group row">
+                            <h:outputLabel value="#{msg.registration} #{msg.date}" styleClass="col-sm-4 form-control-label">
+                                <span class="text-danger"> * <h:message for="petDor"/> </span>
+                            </h:outputLabel>
+                            <div class="col-sm-7">
+                                <p:calendar pattern="#{msg.date_pattern}" value="#{petController.pet.dateOfRegistration}" 
+                                            required="true" id="petDor" requiredMessage="required"/>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <h:outputLabel value="#{msg.colour}" styleClass="col-sm-4 form-control-label"/>
+                            <div class="col-sm-7">
+                                <h:inputText value="#{petController.pet.colour}" styleClass="form-control"/>
+                            </div>
+
+                        </div>
+
+                        <div class="form-group row">
+                            <h:outputLabel value="#{msg.animal_sp}" styleClass="col-sm-4 form-control-label"/>
+                            <div class="col-sm-7">
+                                <h:inputText value="#{petController.pet.animalSP}" styleClass="form-control"/>
+                            </div>
+
+                        </div>
+                        <div class="form-group row">
+                            <h:outputLabel value="#{msg.breed}" styleClass="col-sm-4 form-control-label">
+                                <span class="text-danger"> * <h:message for="breed"/> </span>
+                            </h:outputLabel>
+                            <div class="col-sm-7">
+                                <h:inputText value="#{petController.pet.breed}" styleClass="form-control" id="breed" required="true" requiredMessage="required"/>
+                            </div>
+
+                        </div>
+                        <div class="form-group row">
+                            <h:outputLabel value="#{msg.sex}" styleClass="col-sm-4 form-control-label">
+                                <span class="text-danger"> * <h:message for="gender"/> </span>
+                            </h:outputLabel>
+                            <div class="col-sm-7">
+                                <h:selectOneMenu value="#{petController.pet.gender}" styleClass="form-control" required="true" requiredMessage="required" id="gender">
+                                    <f:selectItem itemLabel="#{msg.select_one}" />
+                                    <f:selectItems value="#{selectItemOptions.genderSelectItems}" />
+                                </h:selectOneMenu>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="clearfix" />
+                    <h:panelGroup layout="block">
+                        <h:panelGrid columns="2">
+                            <p:commandButton actionListener="#{petController.savePet()}" value="#{msg.save}" ajax="false"/>
+                            <p:commandButton value="#{msg.clear}" actionListener="#{petController.clear()}" ajax="true" immediate="true" update="petForm"/>
+                        </h:panelGrid>
+                    </h:panelGroup>
+
+                </h:form>
+            </p:panel>
+
+        </div>
+    </div>
+    <br />
+    <p:panel header="#{petController.selectedClient.clientFullName} #{msg.pet} #{msg.list}">
+        <h:form>
+            <p:dataTable value="#{petController.petsList}" var="pet" rows="20" paginator="true" paginatorPosition="bottom">
+                <p:column headerText="#{msg.name}">
+                    <h:outputText value="#{pet.name}" />
+                </p:column>
+                <p:column headerText="#{msg.breed}">
+                    <h:outputText value="#{pet.breed}" />
+                </p:column>
+                <p:column headerText="#{msg.chip_code}">
+                    <h:outputText value="#{pet.chipCode}" />
+                </p:column>
+                <p:column headerText="#{msg.sex}">
+                    <h:outputText value="#{pet.gender.name}" />
+                </p:column>
+                <p:column headerText="#{msg.dor}">
+                    <latlabfaces:dateDisplay value="#{pet.dateOfRegistration}" />
+                </p:column>
+                <p:column headerText="#{msg.action}">
+                    <p:commandLink ajax="false" value="#{msg.select}" actionListener="#{petController.selectPet(pet)}" /> |
+                    <p:commandLink ajax="false" value="#{msg.del}" actionListener="#{petController.deletePet(pet)}" />
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </p:panel>
+
+
+
+</h:panelGroup>
+

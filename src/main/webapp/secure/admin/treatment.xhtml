@@ -1,0 +1,100 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<div xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:h="http://xmlns.jcp.org/jsf/html"
+     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+     xmlns:p="http://primefaces.org/ui"
+     xmlns:petboss="http://xmlns.jcp.org/jsf/composite/petboss"
+     xmlns:f="http://xmlns.jcp.org/jsf/core"
+     xmlns:latlabfaces="http://xmlns.jcp.org/jsf/composite/latlabfaces">
+    <ui:composition template="../admin-template.xhtml">
+        <ui:define name="page-title">
+            #{msg.Treatment}
+        </ui:define>
+        <ui:define name="content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card-box">
+                        <h:panelGroup rendered="#{treatmentController.treatment.id eq null}">
+                            <h:form>
+                                <div class="row">
+
+                                    <div class="col-md-5">
+                                        <p:panel header="Pet Search">
+                                            <petboss:petSearch selectAction="#{treatmentController.selectPetAction()}" ajax="false"/>
+                                        </p:panel>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <p:panel header="#{treatmentController.selectedPet.name} #{msg.Treatment} #{msg.form}">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <h:outputLabel value="#{msg.temp}" styleClass="col-sm-2 form-control-label"/>
+                                                        <div class="col-sm-6">
+                                                            <h:inputText value="#{treatmentController.treatment.temperature}" styleClass="form-control"/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <h:outputLabel value="#{msg.weight}" styleClass="col-sm-2 form-control-label"/>
+                                                        <div class="col-sm-6">
+                                                            <h:inputText value="#{treatmentController.treatment.weight}" styleClass="form-control"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <h:outputLabel value="#{msg.complain}" styleClass="col-sm-2 form-control-label"/>
+                                                        <div class="col-sm-6">
+                                                            <h:inputTextarea value="#{treatmentController.treatment.description}" styleClass="form-control"
+                                                                            />
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br />
+                                            <h:panelGroup layout="block">
+                                                <h:panelGrid columns="2">
+                                                    <p:commandButton value="#{msg.save}" actionListener="#{treatmentController.diagnosis()}" ajax="false"/>
+                                                    <p:commandButton value="#{msg.clear}" actionListener="#{treatmentController.clear()}" ajax="false"/>
+                                                </h:panelGrid>
+                                            </h:panelGroup>
+                                        </p:panel>
+                                    </div>
+
+                                </div>
+                            </h:form>
+                        </h:panelGroup>
+
+                        <h:panelGroup rendered="#{treatmentController.treatment.id ne null}">
+                            <ui:include src="treatment-input.xhtml" />
+                        </h:panelGroup>
+                        <br />
+                        <p:panel header="Treatment History #{treatmentController.selectedPet.name}">
+                            <h:form>
+                                <p:dataTable value="#{treatmentController.treatmentsList}" var="treatment" paginator="true" paginatorPosition="bottom"
+                                             rows="10">
+                                    <p:column headerText="#{msg.date}">
+                                        <latlabfaces:dateDisplay value="#{treatment.valueDate}" />
+                                    </p:column>
+                                    <p:column headerText="#{msg.diagnosis}">
+                                        <h:outputText value="#{treatment.diagnosis.diagnosisName}" />
+                                    </p:column>
+                                    <p:column headerText="#{msg.next_appointment_date}">
+                                        <latlabfaces:dateDisplay value="#{treatment.nextTreatmentDate}" />
+                                    </p:column>
+                                    <p:column headerText="#{msg.action}">
+                                        <p:commandLink value="#{msg.print}" target="_blank" actionListener="#{treatmentController.printReceipt(treatment)}"/>
+                                    </p:column>
+                                </p:dataTable>
+                            </h:form>
+
+                        </p:panel>
+                    </div>
+                </div>
+            </div>
+        </ui:define>
+    </ui:composition>
+</div>
+

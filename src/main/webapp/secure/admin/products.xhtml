@@ -1,0 +1,88 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<div xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:h="http://xmlns.jcp.org/jsf/html"
+     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+     xmlns:p="http://primefaces.org/ui"
+     xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="../admin-template.xhtml">
+        <ui:define name="page-title">
+            #{msg.product}
+        </ui:define>
+        <ui:define name="content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card-box">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h:form id="diagnosisForm">
+                                    <p:panel header="#{msg.product} #{msg.form}">
+
+                                        <div class="form-group row">
+                                            <h:outputLabel value="#{msg.name}" styleClass="col-sm-4 form-control-label"/>
+                                            <div class="col-sm-7">
+                                                <h:inputText value="#{productController.product.productName}" styleClass="form-control"/>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <h:outputLabel value="#{msg.product} #{msg.form}" styleClass="col-sm-4 form-control-label"/>
+                                            <div class="col-sm-7">
+                                                <p:selectOneMenu value="#{productController.product.productForm}" styleClass="form-control"
+                                                                 filter="true" filterMatchMode="contains" converter="omnifaces.SelectItemsConverter">
+                                                    <f:selectItem itemLabel="#{msg.select_one}" />
+                                                    <f:selectItems value="#{selectItemOptions.productFormSelectItems}" />
+                                                </p:selectOneMenu>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <h:outputLabel value="#{msg.drxn_of_use}" styleClass="col-sm-4 form-control-label"/>
+                                            <div class="col-sm-7">
+                                                <h:inputTextarea value="#{productController.product.directionOfUse}" styleClass="form-control"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <h:outputLabel value="#{msg.side_effects}" styleClass="col-sm-4 form-control-label"/>
+                                            <div class="col-sm-7">
+                                                <h:inputTextarea value="#{productController.product.sideEffect}" styleClass="form-control"/>
+                                            </div>
+                                        </div>
+                                        <div class="clearfix" />
+                                        <h:panelGroup layout="block">
+                                            <h:panelGrid columns="2">
+                                                <p:commandButton value="#{msg.save}" actionListener="#{productController.saveProduct()}" ajax="false"/>
+                                                <p:commandButton value="#{msg.clear}" actionListener="#{productController.clearForm()}" ajax="false"/>
+                                            </h:panelGrid>
+                                        </h:panelGroup>
+                                    </p:panel>
+
+                                </h:form>
+                            </div>
+
+                            <div class="col-md-6">
+                                <h:form>
+                                    <p:dataTable value="#{productController.productsList}" var="product" rows="20"
+                                                 paginator="true" paginatorPosition="bottom">
+                                        <p:column headerText="#{msg.name}">
+                                            <h:outputText value="#{product.productName}"/>
+                                        </p:column>
+                                        <p:column headerText="#{msg.action}">
+                                            <p:commandLink value="#{msg.select}" actionListener="#{productController.selectProduct(product)}"
+                                                           ajax="false"/> |
+                                            <p:commandLink value="#{msg.del}" actionListener="#{productController.deleteProduct(product)}"
+                                                           ajax="false"/>
+                                        </p:column>
+                                    </p:dataTable>
+                                </h:form>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+        </ui:define>
+    </ui:composition>
+</div>
+

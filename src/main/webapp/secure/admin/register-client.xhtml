@@ -1,0 +1,133 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:latlabfaces="http://xmlns.jcp.org/jsf/composite/latlabfaces">
+    <ui:composition template="../admin-template.xhtml">
+        <ui:define name="page-title">
+            #{msg.client} #{msg.registration}
+        </ui:define>
+        <ui:define name="content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card-box">
+                        <h:panelGroup id="clientGrp" rendered="#{!clientController.showPetRegistrationDialog}">
+                            <p:panel header="#{msg.client} #{msg.form}">
+                                <h:form prependId="false" id="clientForm">
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <h:outputLabel value="#{msg.client} #{msg.code}" styleClass="col-sm-4 form-control-label">
+                                                <span class="text-danger"> * <h:message for="clientCode"/> </span>
+                                            </h:outputLabel>
+                                            <div class="col-sm-7">
+                                                <h:inputText id="clientCode" value="#{clientController.clientCode}" styleClass="form-control" required="true" requiredMessage="required"/>
+                                            </div> 
+                                        </div>
+                                        <div class="form-group row">
+                                            <h:outputLabel value="#{msg.surname}" styleClass="col-sm-4 form-control-label">
+                                                <span class="text-danger"> * <h:message for="surname"/> </span>
+                                            </h:outputLabel>
+                                            <div class="col-sm-7">
+                                                <h:inputText id="surname" value="#{clientController.client.surname}" styleClass="form-control" required="true" requiredMessage="required"/>
+                                            </div> 
+                                        </div>
+                                        <div class="form-group row">
+                                            <h:outputLabel value="#{msg.other_names}" styleClass="col-sm-4 form-control-label">
+                                                <span class="text-danger"> * <h:message for="otherNames"/> </span>
+                                            </h:outputLabel>
+                                            <div class="col-sm-7">
+                                                <h:inputText id="otherNames" value="#{clientController.client.otherNames}" styleClass="form-control" required="true" requiredMessage="required"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <h:outputLabel value="#{msg.registration} #{msg.date}" styleClass="col-sm-4 form-control-label">
+                                                <span class="text-danger"> * <h:message for="dor"/> </span>
+                                            </h:outputLabel>
+                                            <div class="col-sm-7">
+                                                <p:calendar pattern="#{msg.date_pattern}" value="#{clientController.client.dateOfRegistration}"  
+                                                            required="true" id="dor" requiredMessage="required"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <h:outputLabel value="#{msg.tel}" styleClass="col-sm-4 form-control-label" />
+                                            <div class="col-sm-7">
+                                                <h:inputText value="#{clientController.client.telephoneNumber}" styleClass="form-control"/>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <h:outputLabel value="#{msg.mobile_no}" styleClass="col-sm-4 form-control-label">
+                                                <span class="text-danger"> * <h:message for="mobileNumber"/> </span>
+                                            </h:outputLabel>
+                                            <div class="col-sm-7">
+                                                <h:inputText value="#{clientController.client.mobileNumber}" styleClass="form-control" required="true" requiredMessage="required" id="mobileNumber"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <h:outputLabel value="#{msg.email}" styleClass="col-sm-4 form-control-label"/>
+                                            <div class="col-sm-7">
+                                                <h:inputText value="#{clientController.client.email}" styleClass="form-control"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <h:outputLabel value="#{msg.address}" styleClass="col-sm-4 form-control-label" />
+                                            <div class="col-sm-7">
+                                                <h:inputTextarea value="#{clientController.client.addressLine}" styleClass="form-control"/>
+                                            </div>      
+                                        </div>
+                                    </div>
+
+                                    <div class="clearfix" />
+                                    <h:panelGroup layout="block">
+                                        <h:panelGrid columns="2">
+                                            <p:commandButton value="#{msg.save}" actionListener="#{clientController.saveClient()}" ajax="false"/>
+                                            <p:commandButton value="#{msg.clear}" actionListener="#{clientController.clear()}"  immediate="true" update="clientForm" ajax="true"/>
+                                        </h:panelGrid>
+                                    </h:panelGroup>  
+                                </h:form>
+                                <br />
+                                <h:form>
+                                    <p:dataTable value="#{clientController.clientsList}" var="client" rows="20"
+                                                 paginator="true" paginatorPosition="bottom">
+                                        <p:column headerText="#{msg.surname}" filterMatchMode="contains" filterBy="#{client.surname}">
+                                            <h:outputText value="#{client.surname}"/>
+                                        </p:column>
+                                        <p:column headerText="#{msg.other_names}" filterMatchMode="contains" filterBy="#{client.otherNames}">
+                                            <h:outputText value="#{client.otherNames}"/>
+                                        </p:column>
+                                        <p:column headerText="#{msg.tel}">
+                                            <h:outputText value="#{client.telephoneNumber}"/>
+                                        </p:column>
+                                        <p:column headerText="#{msg.dor}">
+                                            <latlabfaces:dateDisplay value="#{client.dateOfRegistration}"/>
+                                        </p:column>
+                                        <p:column headerText="#{msg.action}">
+                                            <p:commandLink value="#{msg.select}" actionListener="#{clientController.selectClient(client)}"
+                                                           ajax="false"/> |
+                                            <p:commandLink value="#{msg.del}" actionListener="#{clientController.deleteClient(client)}"
+                                                           ajax="false"/> |
+                                            <p:commandLink value="View Client Pets" actionListener="#{clientController.viewClientPet(client)}" ajax="false" update=":petGrp"/>
+                                        </p:column>
+                                    </p:dataTable>
+                                </h:form>
+                            </p:panel>
+                        </h:panelGroup>
+
+                        <h:panelGroup id="petGrp" rendered="#{clientController.showPetRegistrationDialog}">
+
+                            <ui:include src="register-pet.xhtml"/>
+
+                        </h:panelGroup>
+
+                    </div>
+                </div>
+            </div>
+
+        </ui:define>
+    </ui:composition>
+</html>
+
